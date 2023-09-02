@@ -1,3 +1,0 @@
-﻿  win32_platform.cpp
-C:\Users\chakn\Documents\GitHub\my-first-game\My_First_Cpp_Game\My_First_Cpp_Game\utils.cpp(14,1): error C2084: function 'int clampsasdfasdf(int,int,int)' already has a body
-C:\Users\chakn\Documents\GitHub\my-first-game\My_First_Cpp_Game\My_First_Cpp_Game\utils.cpp(14,1): message : see previous definition of 'clampsasdfasdf'
