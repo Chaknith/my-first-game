@@ -11,7 +11,7 @@ typedef unsigned long long u64;
 #define internal static
 
 inline int
-clampsasdfasdf(int min, int val, int max) {
+clamp(int min, int val, int max) {
 	if (val < min) return min;
 	if (val > max) return max;
 	return val;
