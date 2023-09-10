@@ -2,13 +2,15 @@
 #define pressed(b) (input->buttons[b].is_down && input->buttons[b].changed)
 #define released(b) (!input->buttons[b].is_down && input->buttons[b].changed)
 
+int initial_ball_speed = 140;
+
 float player_1_p_y, player_1_dp;
 int player_1_p_x = 80;
 float player_2_p_y, player_2_dp;
 int player_2_p_x = -80;
 int arena_half_size_x = 85, arena_half_size_y = 45;
 int player_half_size_x = 2.5, player_half_size_y = 12, ball_half_size = 1;
-float ball_p_x, ball_p_y, ball_dp_x= 100, ball_dp_y;
+float ball_p_x, ball_p_y, ball_dp_x= initial_ball_speed, ball_dp_y;
 int player_1_score = 0;
 int player_2_score = 0;
 
@@ -50,9 +52,16 @@ simulate_game(Input* input, float dt) {
 	if (is_down(BUTTON_DOWN)) player_1_ddp -= 1400;
 
 	float player_2_ddp = 0.f;
+#if 0
 	if (is_down(BUTTON_W)) player_2_ddp += 1400;
 	if (is_down(BUTTON_S)) player_2_ddp -= 1400;
-
+#else
+	//if (ball_p_y > player_2_p_y + 2.f) player_2_ddp += 1000;
+	//if (ball_p_y < player_2_p_y + 2.f) player_2_ddp -= 1000;
+	player_2_ddp = (ball_p_y - player_2_p_y) * 100;
+	if (player_2_ddp > 1000) player_2_ddp = 1000;
+	if (player_2_ddp < -1000) player_2_ddp = -1000;
+#endif
 	// Player 1
 	simulate_player(&player_1_p_y, &player_1_dp, player_1_ddp, dt);
 
@@ -89,7 +98,7 @@ simulate_game(Input* input, float dt) {
 	if (ball_p_x + ball_half_size > arena_half_size_x) {
 		ball_p_x = 0;
 		ball_p_y = 0;
-		ball_dp_x = -100;
+		ball_dp_x = -initial_ball_speed;
 		ball_dp_y = 0;
 		player_2_score++;
 	}
@@ -97,7 +106,7 @@ simulate_game(Input* input, float dt) {
 		ball_p_x = 0;
 		ball_p_y = 0;
 		ball_dp_y = 0;
-		ball_dp_x = 100;
+		ball_dp_x = initial_ball_speed;
 		player_1_score++;
 	}
 
