@@ -9,8 +9,8 @@ int player_2_p_x = -80;
 int arena_half_size_x = 85, arena_half_size_y = 45;
 int player_half_size_x = 2.5, player_half_size_y = 12, ball_half_size = 1;
 float ball_p_x, ball_p_y, ball_dp_x= 100, ball_dp_y;
-bool player_1_alive = true;
-bool player_2_alive = true;
+int player_1_score = 0;
+int player_2_score = 0;
 
 internal void
 simulate_player(float *p, float *dp, float ddp, float dt) {
@@ -91,13 +91,18 @@ simulate_game(Input* input, float dt) {
 		ball_p_y = 0;
 		ball_dp_x = -100;
 		ball_dp_y = 0;
+		player_2_score++;
 	}
 	else if (ball_p_x - ball_half_size < -arena_half_size_x) {
 		ball_p_x = 0;
 		ball_p_y = 0;
 		ball_dp_y = 0;
 		ball_dp_x = 100;
+		player_1_score++;
 	}
+
+	draw_score(player_1_score, -10, 40, 1.f, 0xbbffbb);
+	draw_score(player_2_score, 10, 40, 1.f, 0xbbffbb);
 
 	// Draw pong
 	draw_rect(ball_p_x, ball_p_y, ball_half_size, ball_half_size, 0xffffff);
